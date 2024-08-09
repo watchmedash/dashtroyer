@@ -3,120 +3,622 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-adsense-account" content="ca-pub-2412399424552673">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="icon" href="images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
-    <title>Dashtroyer</title>
+    <title>TV Shows Gallery</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* Light text color */
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 20px;
+        }
+        .grid-item {
+            text-align: center;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .grid-item:hover img {
+            transform: scale(1.1);
+        }
+        .player {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow: auto;
+        }
+        .player-content {
+            position: relative;
+            width: 80%;
+            max-width: 1200px; /* Maximum width for larger screens */
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+        }
+        .player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .player .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1001; /* Ensure it is above iframe */
+        }
+        .player .close-btn::before {
+            content: '✖';
+            font-size: 20px;
+            color: #000;
+        }
+        #season-episode-selection {
+            display: none;
+            position: fixed;
+            bottom: 20px; /* Distance from the bottom */
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px); /* Adjust to fit within player content */
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            z-index: 1001; /* Ensure it is above iframe */
+        }
+        select {
+            margin: 0;
+            padding: 5px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+        #filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Adjust the gap between dropdowns as needed */
+            margin: 20px 0; /* Add some margin above and below */
+        }
+        #filters select {
+            padding: 5px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+        #search-input {
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-<header>
-      <nav>
-  <div class="logo-title-container">
-    <div class="logo-container">
-      <img src="images/logo.png" alt="Dashtroyer Logo">
+    <div id="filters">
+        <select id="release-year">
+            <option value="">Release Year</option>
+            <!-- Release year options will be populated dynamically -->
+        </select>
+
+        <select id="genre">
+            <option value="">Genre</option>
+            <!-- Genre options will be populated dynamically -->
+        </select>
     </div>
-    <div class="nav-title">
-      <h1>Dashtroyer</h1>
-      <p>Official Website</p>
-    </div>
-    <div class="menu-icon">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
-    </div>
-    <div class="nav-links">
-      <ul>
-        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
-      </ul>
-    </div>
-</nav>
 
+    <input type="text" id="search-input" placeholder="Search TV Shows">
 
-    </header>
-
-
-
-
-
-<div class="image-container"><h1>Our Apps!</h1></div>
-
- <div id="gallery-container" class="gallery">
-
-   <figure>
-     <a href="Dash Toons.html">
-         <img src="images/Dash Toons.png">
-     </a>
-     <figcaption>Dash Toons</figcaption>
-   </figure>
-   <figure>
-     <a href="Dash's Short Stories.html">
-         <img src="images/Dash's Short Stories.png">
-     </a>
-     <figcaption>Short Stories</figcaption>
-   </figure>
-   <figure>
-     <a href="Watch Me Now.html">
-         <img src="images/Watch Me Now.webp">
-     </a>
-     <figcaption>Dashflix</figcaption>
-   </figure>
-   <figure>
-     <a href="Cook Me Now.html">
-         <img src="images/Cook Me Now.png">
-     </a>
-     <figcaption>Cook Me Now</figcaption>
-   </figure>
-
- </div>
-
-
- <section id="introduction">
-    <h1>Welcome to Dashtroyer!</h1>
-    <p>Dashtroyer is the official platform created by Dash Unlimited, a dedicated app developer and visionary in the field of technology. Driven by innovation and a passion for solving real-world problems, the apps designed under the Dashtroyer banner are tailored to meet the unique needs of users worldwide.</p>
-
-    <h2>Why Dashtroyer?</h2>
-    <p>At Dashtroyer, we believe that technology should be intuitive, accessible, and transformative. Our apps reflect this philosophy, offering user-friendly interfaces, cutting-edge features, and solutions that empower individuals and businesses alike.</p>
-
-    <h2>What You'll Find Here</h2>
-    <ul>
-        <li><strong>Apps &amp; Services</strong>: Explore our range of apps that cover various domains, from productivity tools to entertainment solutions. Each app is crafted with precision, ensuring optimal functionality and a seamless user experience.</li>
-        <li><strong>Future Projects</strong>: Stay ahead of the curve by getting an insider's look at our upcoming projects. Be the first to know about our innovations and the exciting new directions we are exploring.</li>
-        <li><strong>Privacy Policy</strong>: Your trust is our priority. At Dashtroyer, we adhere to stringent privacy policies to safeguard your personal information. Learn more about how we protect your privacy and what measures we take to ensure a secure environment.</li>
-        <li><strong>Contact &amp; Support</strong>: Have a question or need support? Our dedicated customer service team is here to assist you. Reach out, and we'll be glad to help.</li>
-        <li><strong>Advertise with Us</strong>: Looking to promote your product or service? Explore our advertising opportunities and discover how we can help you reach a targeted audience.</li>
-    </ul>
-
-    <h2>Join Us on the Journey</h2>
-    <p>Whether you're a loyal user of our apps, a fellow developer, or someone who's just discovering what Dashtroyer has to offer, we invite you to join us on this exciting journey. Explore the site, download our apps, and connect with us on social media. Together, we can shape the future of technology.</p>
-
-
-</section>
-
-
-
-
-            <footer>
-          <nav class="footer-nav">
-            <ul class="footer-links">
-              <li><a href="contact.html">Contact Us</a></li>
-              <li><a href="Privacy Policy.html">Privacy Policy</a></li>
-            </ul>
-            <div class="social-icons">
-              <a href="https://www.instagram.com/watchmenow_x" class="social-icon"><i class="fab fa-instagram"></i></a>
-              <a href="https://www.youtube.com/channel/UCTEJdVnBHiiSUizkTAen0xA" class="social-icon"><i class="fab fa-youtube"></i></a>
-              <a href="https://www.facebook.com/profile.php?id=100094443101398" class="social-icon"><i class="fab fa-facebook"></i></a>
-              <a href="https://twitter.com/_WatchMeNow" class="social-icon"><i class="fab fa-twitter"></i></a>
+    <div class="container">
+        <h1>TV Shows Gallery</h1>
+        <div id="tv-gallery" class="grid"></div>
+        <div id="tv-player" class="player">
+            <div class="player-content">
+                <button class="close-btn"></button>
+                <iframe id="tv-iframe" frameborder="0" allowfullscreen></iframe>
             </div>
-          </nav>
-          <p class="copyright">Dashtroyer 2024. All rights reserved.</p>
-        </footer>
+            <div id="season-episode-selection">
+                <select id="season">
+                    <option value="">Select Season</option>
+                </select>
+                <select id="episode">
+                    <option value="">Select Episode</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        const apiKey = '4f599baa15d072c9de346b2816a131b8';
+            const imdbIds = [
+            "tt1312171",
+            "tt0944947",
+            "tt11198330",
+            "tt1190634",
+            "tt14452776",
+            "tt11612120",
+            "tt9288030",
+            "tt7221388",
+            "tt11737520",
+            "tt13016388",
+            "tt1837492",
+            "tt21831910",
+            "tt14681596",
+            "tt10569934",
+            "tt28118211",
+            "tt0452046",
+            "tt1928307",
+            "tt9055008",
+            "tt0203259",
+            "tt4236770",
+            "tt0413573",
+            "tt0364845",
+            "tt4786824",
+            "tt0149460",
+            "tt11379456",
+            "tt8740790",
+            "tt14022668",
+            "tt0412142",
+            "tt2356777",
+            "tt7134908",
+            "tt6156584",
+            "tt28775005",
+            "tt0436992",
+            "tt2017109",
+            "tt16283758",
+            "tt13210838",
+            "tt7440726",
+            "tt0118401",
+            "tt0312172",
+            "tt13062500",
+            "tt0472954",
+            "tt5875444",
+            "tt7335184",
+            "tt0106179",
+            "tt14022350",
+            "tt4179452",
+            "tt18070898",
+            "tt1844624",
+            "tt0460627",
+            "tt7767422",
+            "tt0491738",
+            "tt13315664",
+            "tt14688458",
+            "tt12327578",
+            "tt15135104",
+            "tt8420184",
+            "tt1533395",
+            "tt0071075",
+            "tt7678620",
+            "tt9253866",
+            "tt0081846",
+            "tt6769208",
+            "tt0795176",
+            "tt5491994",
+            "tt0098904",
+            "tt0092337",
+            "tt1865718",
+            "tt0877057",
+            "tt0098769",
+            "tt0081912",
+            "tt2098220",
+            "tt0303461",
+            "tt2092588",
+            "tt10541088",
+            "tt12392504",
+            "tt0296310",
+            "tt1877514",
+            "tt0052520",
+            "tt0264235",
+            "tt0081834",
+            "tt22248376",
+            "tt3398228",
+            "tt2364582",
+            "tt10795658",
+            "tt14169960",
+            "tt11126994",
+            "tt2193021",
+            "tt2560140",
+            "tt0417299",
+            "tt9018736",
+            "tt0185906",
+            "tt0103359",
+            "tt8712204",
+            "tt9174724",
+            "tt3032476",
+            "tt6045840",
+            "tt2085059",
+            "tt0903747",
+            "tt2467372",
+            "tt5614844",
+            "tt3489184",
+            "tt0213338",
+            "tt3322312",
+            "tt19231492",
+            "tt5753856",
+            "tt4532368",
+            "tt0773262",
+            "tt8416494",
+            "tt1606375",
+            "tt13966962",
+            "tt16283824",
+            "tt8772296",
+            "tt12637874",
+            "tt2802850",
+            "tt0108778",
+            "tt9813792",
+            "tt1355642",
+            "tt26426076",
+            "tt1830617",
+            "tt2934286",
+            "tt10160804",
+            "tt27763561",
+            "tt0460649",
+            "tt4154858",
+            "tt6741278",
+            "tt3322310",
+            "tt6025022",
+            "tt5788792",
+            "tt0988824",
+            "tt0758745",
+            "tt0086661",
+            "tt5712554",
+            "tt0092455",
+            "tt4508902",
+            "tt0387764",
+            "tt0367279",
+            "tt0096697",
+            "tt0407362",
+            "tt0286486",
+            "tt13309742",
+            "tt5687612",
+            "tt3501584",
+            "tt2357547",
+            "tt29899148",
+            "tt18291136",
+            "tt4276624",
+            "tt5114356",
+            "tt9140554",
+            "tt0411008",
+            "tt4052886",
+            "tt3322314",
+            "tt0804503",
+            "tt2640044",
+            "tt27792190",
+            "tt11712058",
+            "tt1442437",
+            "tt17220216",
+            "tt6468322",
+            "tt10234724",
+            "tt14044212",
+            "tt10857164",
+            "tt21874396",
+            "tt13146488",
+            "tt2442560",
+            "tt8425532",
+            "tt12324366",
+            "tt5016504",
+            "tt17677860",
+            "tt0455275",
+            "tt22188654",
+            "tt8690918",
+            "tt2861424",
+            "tt5420376",
+            "tt1236246",
+            "tt13157618",
+            "tt11280740",
+            "tt1586680",
+            "tt10857160",
+            "tt1475582",
+            "tt2788316",
+            "tt0279600",
+            "tt6710836",
+            "tt10919420",
+            "tt5171438",
+            "tt0458290",
+            "tt8722888",
+            "tt4574334",
+            "tt7660850",
+            "tt1632701",
+            "tt4016454",
+            "tt11192306",
+            "tt0460681",
+            "tt8362852",
+            "tt12809988",
+            "tt10986410",
+            "tt14824792",
+            "tt1567432",
+            "tt2661044",
+            "tt0898266",
+            "tt4230076",
+            "tt9208876",
+            "tt3107288",
+            "tt4396630",
+            "tt3581920",
+            "tt7631058",
+            "tt8111088",
+            "tt0386676",
+            "tt5675620",
+            "tt7587890",
+            "tt1751634",
+            "tt0141842",
+            "tt14404618",
+            "tt1405406",
+            "tt21433150",
+            "tt9859436",
+            "tt1520211",
+            "tt0306414",
+            "tt5180504",
+            "tt1043813",
+            "tt5057054",
+            "tt13875494",
+            "tt1640719",
+            "tt2306299",
+            "tt9140560",
+            "tt7049682",
+            "tt13443470",
+            "tt0475784",
+            "tt16026746",
+            "tt1641384",
+            "tt6226232",
+            "tt13664452",
+            "tt0072500",
+            "tt0063929",
+            "tt0200276",
+            "tt2571774",
+            "tt3530232",
+            "tt7137906",
+            "tt1508238",
+            "tt4934214",
+            "tt2297757",
+            "tt7920978",
+            "tt9735318",
+            "tt10233448",
+            "tt0121955",
+            "tt3718778",
+            "tt5182866",
+            "tt0248654",
+            "tt0384766",
+            "tt0118421",
+            "tt9432978",
+            "tt0074006",
+            "tt10530900",
+            "tt12004706",
+            "tt0353049",
+            "tt2707408",
+            "tt0121220",
+            "tt0098936",
+            "tt0193676",
+            "tt1266020",
+            "tt0348914",
+            "tt1305826",
+            "tt4288182",
+            "tt1856010",
+            "tt0111958",
+            "tt5555260",
+            "tt14392248",
+            "tt10801534",
+            "tt0459159",
+            "tt13991232",
+            "tt1628033",
+            "tt2303687",
+            "tt0481256",
+            "tt10850932",
+            "tt2049116",
+            "tt4834232",
+            "tt7472896",
+            "tt21056886",
+            "tt13111040",
+            "tt0090509",
+            "tt0096657",
+            "tt0094525",
+            "tt3398540",
+            "tt5290382",
+            "tt4299972",
+            "tt1733785",
+            "tt9140342",
+            "tt10332508",
+            "tt0112130",
+          ]; // Example IMDb IDs
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="homepage.js"></script>
-</body>
-</html>
+          const searchInput = document.getElementById('search-input');
+                  const gallery = document.getElementById('tv-gallery');
+                  const player = document.getElementById('tv-player');
+                  const iframe = document.getElementById('tv-iframe');
+                  const seasonSelect = document.getElementById('season');
+                  const episodeSelect = document.getElementById('episode');
+                  const selectionDiv = document.getElementById('season-episode-selection');
+                  const closeButton = document.querySelector('.player .close-btn');
+                  const genreSelect = document.getElementById('genre');
+                  const yearSelect = document.getElementById('release-year');
+                  let currentTmdbId = '';
+
+                  // Fetch TV shows based on IMDb IDs and apply filters
+                  function fetchTVShows() {
+                      const genre = genreSelect.value;
+                      const releaseYear = yearSelect.value;
+                      const searchQuery = searchInput.value.toLowerCase();
+                      gallery.innerHTML = '';
+
+                      imdbIds.forEach(imdbId => {
+                          fetch(`https://api.themoviedb.org/3/find/${imdbId}?api_key=${apiKey}&external_source=imdb_id`)
+                              .then(response => response.json())
+                              .then(data => {
+                                  const show = data.tv_results[0];
+                                  if (show) {
+                                      const showGenreIds = show.genre_ids; // Show genre IDs
+                                      const showName = show.name.toLowerCase();
+                                      const showYear = new Date(show.first_air_date).getFullYear(); // Show release year
+
+                                      // Check if the show meets the filter criteria
+                                      const genreMatches = !genre || showGenreIds.includes(Number(genre));
+                                      const searchMatches = !searchQuery || showName.includes(searchQuery);
+                                      const yearMatches = !releaseYear || showYear === Number(releaseYear);
+
+                                      if (genreMatches && yearMatches && searchMatches) {
+                                          const img = document.createElement('img');
+                                          img.src = `https://image.tmdb.org/t/p/w500${show.poster_path}`;
+                                          img.alt = show.name;
+                                          img.dataset.tmdbId = show.id;
+                                          img.loading = 'lazy';
+                                          img.style.width = '100%';
+                                          img.style.height = 'auto';
+                                          img.style.display = 'block';
+                                          img.style.borderRadius = '8px';
+                                          img.addEventListener('click', () => showPlayer(show.id));
+                                          const div = document.createElement('div');
+                                          div.className = 'grid-item';
+                                          div.appendChild(img);
+                                          gallery.appendChild(div);
+                                      }
+                                  }
+                              })
+                              .catch(err => console.error('Error fetching TV show:', err));
+                      });
+                  }
+
+                  // Fetch and populate genres
+                  function fetchGenres() {
+                      fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${apiKey}`)
+                          .then(response => response.json())
+                          .then(data => {
+                              data.genres.forEach(genre => {
+                                  const option = document.createElement('option');
+                                  option.value = genre.id;
+                                  option.textContent = genre.name;
+                                  genreSelect.appendChild(option);
+                              });
+                          })
+                          .catch(err => console.error('Error fetching genres:', err));
+                  }
+
+                  // Fetch and populate release years
+                  function fetchYears() {
+                      const currentYear = new Date().getFullYear();
+                      for (let year = currentYear; year >= 2000; year--) { // Adjust range as needed
+                          const option = document.createElement('option');
+                          option.value = year;
+                          option.textContent = year;
+                          yearSelect.appendChild(option);
+                      }
+                  }
+
+                  // Show player with selected show details
+                  function showPlayer(tmdbId) {
+                      currentTmdbId = tmdbId;
+                      fetch(`https://api.themoviedb.org/3/tv/${tmdbId}?api_key=${apiKey}&append_to_response=external_ids`)
+                          .then(response => response.json())
+                          .then(data => {
+                              const seasons = data.seasons;
+                              seasonSelect.innerHTML = '<option value="">Select Season</option>';
+                              episodeSelect.innerHTML = '<option value="">Select Episode</option>';
+
+                              // Add seasons to the season dropdown
+                              seasons.forEach(season => {
+                                  if (season.season_number > 0) { // Skip season 0
+                                      const option = document.createElement('option');
+                                      option.value = season.season_number;
+                                      option.textContent = `Season ${season.season_number}`;
+                                      seasonSelect.appendChild(option);
+                                  }
+                              });
+
+                              player.style.display = 'flex';
+                              selectionDiv.style.display = 'flex';
+                          })
+                          .catch(err => console.error('Error loading seasons:', err));
+                  }
+
+                  // Load episodes for the selected season
+                  function loadEpisodes(seasonNumber) {
+                      fetch(`https://api.themoviedb.org/3/tv/${currentTmdbId}/season/${seasonNumber}?api_key=${apiKey}`)
+                          .then(response => response.json())
+                          .then(data => {
+                              const episodes = data.episodes;
+                              episodeSelect.innerHTML = '<option value="">Select Episode</option>';
+
+                              episodes.forEach(episode => {
+                                  const option = document.createElement('option');
+                                  option.value = episode.episode_number;
+                                  option.textContent = `Episode ${episode.episode_number}`;
+                                  episodeSelect.appendChild(option);
+                              });
+
+                              episodeSelect.addEventListener('change', () => playEpisode(seasonNumber, episodeSelect.value));
+                          })
+                          .catch(err => console.error('Error loading episodes:', err));
+                  }
+
+                  // Play selected episode
+                  function playEpisode(seasonNumber, episodeNumber) {
+                      const url = `https://vidsrc.xyz/embed/tv/${currentTmdbId}/${seasonNumber}-${episodeNumber}`;
+                      iframe.src = url;
+                  }
+
+                  // Initialize the page
+                  function initialize() {
+                      fetchGenres();
+                      fetchYears();
+                      fetchTVShows();
+
+                      genreSelect.addEventListener('change', fetchTVShows);
+                      yearSelect.addEventListener('change', fetchTVShows);
+                      searchInput.addEventListener('input', fetchTVShows);
+                      seasonSelect.addEventListener('change', (e) => loadEpisodes(e.target.value));
+                      episodeSelect.addEventListener('change', () => playEpisode(seasonSelect.value, episodeSelect.value));
+                      closeButton.addEventListener('click', () => {
+                          player.style.display = 'none';
+                          selectionDiv.style.display = 'none';
+                          iframe.src = '';
+                      });
+                  }
+
+                  initialize();
+              </script>
+          </body>
+          </html>
