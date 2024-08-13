@@ -629,7 +629,7 @@ function playEpisode(t, e) {
     }
 
     function fetchYears() {
-        for (let t = (new Date).getFullYear(); t >= 1960; t--) {
+        for (let t = (new Date).getFullYear(); t >= 2000; t--) {
             const e = document.createElement("option");
             e.value = t;
             e.textContent = t;
