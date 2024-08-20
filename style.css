@@ -1,3 +1,22 @@
+.announcement-banner {
+    background-color: rgba(0, 255, 0, 0.7); /* Green background with transparency */
+    color: #000000;
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    position: relative;
+}
+
+.announcement-banner p {
+    margin: 0;
+}
+
+.announcement-banner a {
+    color: #FFFFFF; /* Red link font color */
+    text-decoration: underline;
+}
+
 body {
 margin: 0;
 font-family: Arial, sans-serif;
@@ -258,22 +277,4 @@ font-size: 20px;
             z-index: 1001; /* Ensure it is above other content */
             max-width: calc(100% - 20px); /* Adjust for padding */
             text-align: center;
-        }
-        .announcement-banner {
-            background-color: rgba(0, 255, 0, 0.7); /* Green background with transparency */
-            color: #000000;
-            padding: 5px;
-            text-align: center;
-            font-size: 14px;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            position: relative;
-        }
-
-        .announcement-banner p {
-            margin: 0;
-        }
-
-        .announcement-banner a {
-            color: #FFFFFF; /* Red link font color */
-            text-decoration: underline;
         }
