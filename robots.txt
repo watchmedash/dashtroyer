@@ -2,11 +2,10 @@ User-agent: ia_archiver
 Disallow: /
 
 User-agent: *
-Disallow: /ads.txt
 Disallow: /index.html
 Disallow: /script.js
 Disallow: /view.html
 
 # Allow all other access
 User-agent: *
-Allow: /
+Allow: /ads.txt
