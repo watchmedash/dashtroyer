@@ -1,14 +1,11 @@
 .announcement-banner {
-    background-color: #FFFFFF; /* White background */
-    color: #000000; /* Black font color */
-    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.7); /* Green background with transparency */
+    color: #000000;
+    padding: 5px;
     text-align: center;
-    font-size: 18px;
+    font-size: 14px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     position: relative;
-    border: 2px solid #000000; /* Black border */
-    border-left: 1px solid #000000; /* Black border on the left side */
-    border-right: 1px solid #000000;
 }
 
 .announcement-banner p {
@@ -16,7 +13,7 @@
 }
 
 .announcement-banner a {
-    color: #000000; /* Black link font color */
+    color: #FFFFFF; /* Red link font color */
     text-decoration: underline;
 }
 
