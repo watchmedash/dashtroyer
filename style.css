@@ -17,6 +17,14 @@
     text-decoration: underline;
 }
 
+.terra {
+            display: flex;
+            justify-content: center; /* centers horizontally */
+            align-items: center; /* centers vertically */
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
 body {
 margin: 0;
 font-family: Arial, sans-serif;
