@@ -34,6 +34,7 @@
 
 .channel:hover {
   transform: scale(1.02);
+  border-color: #ffa726; /* Added accent color for hover */
 }
 
 .channel[data-playing="true"] {
@@ -77,6 +78,10 @@
   transition: background-color 0.3s;
 }
 
+.player-wrapper:hover {
+  border-color: #ffa726; /* Optional: Highlight player on hover */
+}
+
 .sticky {
   position: sticky;
   top: var(--space-sm);
@@ -113,7 +118,6 @@
   transition: filter 0.3s;
 }
 
-
 .play-icon {
   position: absolute;
   top: 50%;
@@ -128,6 +132,7 @@
 .play-channel:hover .play-icon {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1.1);
+  color: #ffa726; /* Added accent color */
 }
 
 .play-channel:hover .channel-poster {
@@ -182,7 +187,7 @@
 }
 
 #clear-search:hover {
-  color: #ffffff;
+  color: #ffa726; /* Added accent color for clear button */
 }
 
 #load-more {
@@ -198,7 +203,7 @@
 }
 
 #load-more:hover {
-  background-color: #444;
+  background-color: #ffa726; /* Added accent color for hover */
   transform: scale(1.05);
 }
 
