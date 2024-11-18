@@ -1,9 +1,8 @@
 .imager {
-    max-width: 600px;
+    max-width: 720px;
     margin: 0 auto;
     padding: 20px 0;
     justify-content: center;
-    background-color: #1a1a1a;
 }
 
 /* Centered image styling */
