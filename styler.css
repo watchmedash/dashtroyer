@@ -1,0 +1,57 @@
+.imager {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px 0;
+    justify-content: center;
+    background-color: #1a1a1a;
+}
+
+/* Centered image styling */
+.imager img {
+    width: 100%;  /* Make the image fill the container */
+    height: auto;
+    border-radius: 10px;
+}
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #1a1a1a; /* Dark background */
+  padding: 10px;
+  border-top: 2px solid #333; /* Darker border for contrast */
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+  margin-bottom: 10px; /* Added margin to prevent overlap with content */
+}
+
+/* Navigation Item */
+.nav-item {
+  color: #e0e0e0; /* Light gray text for better contrast */
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px; /* Adjusted font size for better readability */
+  flex-grow: 1;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out; /* Added text-shadow transition */
+  position: relative;
+}
+
+.nav-item i {
+  display: block;
+  font-size: 20px; /* Increased icon size for better visibility */
+  margin-bottom: 5px;
+  transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth bounce effect */
+}
+
+/* Hover effect for Navigation Item */
+.nav-item:hover {
+  color: #ffa726; /* Change color to normal white on hover */
+  transform: scale(1.1);
+}
+
+.nav-item:hover i {
+  transform: scale(1.4); /* Enlarge the icon */
+}
