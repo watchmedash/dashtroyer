@@ -1,0 +1,229 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.terra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.temma {
+  position: relative;
+  padding-top: 56.25%; /* Maintain 16:9 aspect ratio */
+  overflow: hidden;
+  width: 100%; /* Full width */
+  max-width: 800px; /* Optional: Restrict maximum width */
+  margin: 0 auto; /* Center the video */
+  padding-bottom: 0; /* Remove any default bottom padding */
+}
+
+#player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none; /* Remove border styling */
+}
+
+/* Remove unintended gaps caused by margins */
+.temma + * {
+  margin-top: 0; /* Prevent gaps between .terra and the next element */
+}
+
+
+input, select, button {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 5px 0;
+    width: 350px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+input:focus, select:focus, button:hover {
+    background-color: #3a3a3a;
+    transform: scale(1.02);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+li {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeIn 0.5s ease-out;
+    box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.15);
+}
+
+li:hover {
+    transform: scale(1.05);
+    border-color: #ffa726;
+}
+
+li img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.channel-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    padding: 0;
+    list-style-type: none;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+
+.channel-list li {
+    position: relative;
+    width: 200px;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 8px;
+    transition: transform 0.3s ease, border-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.channel-list li:hover {
+    transform: scale(1.05);
+    border-color: #ffa726;
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 600px) {
+    .channel-list li {
+        width: calc(33.33% - 10px);
+    }
+}
+
+.channel-title {
+    font-weight: bold;
+    color: #e0e0e0;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 1.1em;
+}
+
+.thumbnail-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.channel-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    filter: brightness(0.8);
+    transition: filter 0.3s;
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.thumbnail-wrapper:hover .play-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+    color: #ffa726;
+}
+
+.thumbnail-wrapper:hover .channel-poster {
+    filter: brightness(1);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: #1e1e1e;
+    margin: 15% auto;
+    padding: 20px;
+    border: 2px solid #ffa726;
+    width: 80%;
+    text-align: center;
+    border-radius: 8px;
+    color: #e0e0e0;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #ffa726;
+    transform: scale(1.05);
+}
+
+.image-contained img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
