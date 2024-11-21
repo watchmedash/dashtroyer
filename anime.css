@@ -1,61 +1,49 @@
+/* Basic Styles for the Gallery Page */
 body {
   font-family: Arial, sans-serif;
   background-color: #121212;
   color: white;
+  margin: 0;
+  padding: 0;
 }
 
 header {
   text-align: center;
   padding: 20px;
+  background-color: #222;
 }
 
-h1 {
-  font-size: 2rem;
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
 }
 
 .anime-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
   padding: 20px;
 }
 
 .anime-item {
-  width: 200px;
-  text-align: center;
+  background-color: #333;
+  border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease;
-}
-
-.anime-item img {
-  width: 100%;
-  border-radius: 8px;
 }
 
 .anime-item:hover {
   transform: scale(1.05);
 }
 
-.anime-details {
-  padding: 20px;
-  text-align: center;
-}
-
-#anime-seasons {
-  margin: 20px 0;
-}
-
-select {
-  background-color: #333;
-  color: white;
-  border: 1px solid #444;
-  padding: 5px 10px;
-}
-
-#anime-player iframe {
+.anime-item img {
   width: 100%;
-  height: 500px;
-  border-radius: 8px;
-  margin-top: 20px;
+  height: auto;
+}
+
+.anime-item p {
+  padding: 10px;
+  font-size: 1.1rem;
+  text-align: center;
 }
