@@ -15,12 +15,7 @@
 
   <script>
   async function fetchAnimeList() {
-    const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.myanimelist.net/v2/anime/ranking?limit=10', {
-      method: 'GET',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    });
+    const response = await fetch('https://corsproxy.io/?https://api.myanimelist.net/v2/anime/ranking?limit=10');
     const data = await response.json();
     return data.data; // Array of anime objects
   }
