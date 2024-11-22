@@ -23,7 +23,7 @@
 #loading-progress {
     width: 80%; /* Progress bar width */
     max-width: 400px; /* Maximum width */
-    height: 20px;
+    height: 5px;
     appearance: none;
     background-color: #444; /* Dark background */
     border-radius: 10px;
