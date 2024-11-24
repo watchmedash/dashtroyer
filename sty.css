@@ -54,7 +54,6 @@ button:hover {
   border-top: 2px solid #333; /* Darker border for contrast */
   z-index: 1000;
   transition: background-color 0.3s ease-in-out;
-  margin-bottom: 10px; /* Added margin to prevent overlap with content */
 }
 
 /* Navigation Item */
