@@ -1,1 +1,121 @@
-const API_KEY="4f599baa15d072c9de346b2816a131b8",BASE_URL="https://api.themoviedb.org/3",IMAGE_BASE_URL="https://image.tmdb.org/t/p/w500",urlParams=new URLSearchParams(window.location.search),movieId=urlParams.get("id");async function fetchMovieDetails(e){try{const t=await fetch(`${BASE_URL}/movie/${e}?api_key=${API_KEY}&language=en-US`),n=await t.json();displayMovieDetails(n)}catch(e){console.error("Error fetching movie details:",e)}}async function fetchMovieCredits(e){try{const t=await fetch(`${BASE_URL}/movie/${e}/credits?api_key=${API_KEY}&language=en-US`),n=await t.json();displayMovieCredits(n)}catch(e){console.error("Error fetching movie credits:",e)}}function displayMovieDetails(e){document.getElementById("movie-title-info").textContent=e.title,document.getElementById("movie-poster").src=IMAGE_BASE_URL+e.poster_path,document.getElementById("movie-overview").textContent=e.overview,document.getElementById("release-year").textContent=e.release_date.split("-")[0],document.getElementById("rating").textContent=e.vote_average;const t=e.genres.map(e=>e.name).join(", ");document.getElementById("genres").textContent=t;const n=[`https://vidsrc.me/embed/movie/${e.id}`,`https://embed.su/embed/movie/${e.id}`,`https://vidbinge.dev/embed/movie/${e.id}`,`https://vidsrc.vip/embed/movie/${e.id}`,`https://multiembed.mov/directstream.php?video_id=${e.id}&tmdb=1`,`https://vidlink.pro/movie/${e.id}`],o=document.getElementById("video-source");o.innerHTML="",n.forEach((e,t)=>{const n=document.createElement("option");n.value=e,n.textContent=`Server ${t+1}`,o.appendChild(n)}),n.length>0&&(document.getElementById("video-player").src=n[0]),fetchMovieCredits(e.id)}function displayMovieCredits(e){const t=e.crew.find(e=>"Director"===e.job);document.getElementById("director").textContent=t?t.name:"Unknown"}function changeSource(){var e=document.getElementById("video-player"),t=document.getElementById("video-source");e.src=t.value}function goBack(){window.location.href="movies.html"}movieId&&fetchMovieDetails(movieId);
+const params  = new URLSearchParams(location.search);
+const movieId = params.get("id");
+
+if (!movieId || BLOCKED_MOVIES.has(parseInt(movieId))) location.replace("movies.html");
+
+document.getElementById("dlBtn").href = `https://vidvault.ru/movie/${movieId}`;
+
+const SERVERS = [
+  id => `https://vsembed.ru/embed/movie/${id}`,
+  id => `https://moviesapi.to/movie/${id}`,
+  id => `https://vidsrc.vip/embed/movie/${id}`,
+  id => `https://vidlink.pro/movie/${id}`,
+  id => `https://player.videasy.net/movie/${id}`,
+  id => `https://vidfast.pro/movie/${id}?autoPlay=true`,
+  id => `https://player.vidzee.wtf/embed/movie/${id}?server=1`,
+];
+
+function changeServer() {
+  const idx = parseInt(document.getElementById("srvSel").value);
+  document.getElementById("vidPlayer").src = SERVERS[idx](movieId);
+}
+changeServer();
+
+async function loadDetails() {
+  try {
+    const [dRes, cRes, vRes] = await Promise.all([
+      fetch(`${BASE}/movie/${movieId}?api_key=${API_KEY}&language=en-US`),
+      fetch(`${BASE}/movie/${movieId}/credits?api_key=${API_KEY}`),
+      fetch(`${BASE}/movie/${movieId}/videos?api_key=${API_KEY}`),
+    ]);
+    const movie   = await dRes.json();
+    const credits = await cRes.json();
+    const videos  = await vRes.json();
+
+    document.title = `${movie.title} – Tagger.top`;
+    RW.add({ ...movie, type: "movie" });
+
+    const schema = {
+      "@context": "https://schema.org", "@type": "Movie",
+      "name": movie.title,
+      "description": movie.overview || "",
+      "datePublished": movie.release_date || "",
+      "url": `https://tagger.top/player.html?id=${movie.id}`,
+      "genre": (movie.genres || []).map(g => g.name),
+      ...(movie.poster_path && { "image": `${IMG}w500${movie.poster_path}` }),
+      ...(movie.runtime && { "duration": `PT${movie.runtime}M` }),
+      ...(movie.vote_average && { "aggregateRating": { "@type": "AggregateRating", "ratingValue": movie.vote_average.toFixed(1), "ratingCount": movie.vote_count || 1, "bestRating": "10", "worstRating": "0" } }),
+    };
+    const ld = document.createElement("script");
+    ld.type = "application/ld+json";
+    ld.textContent = JSON.stringify(schema);
+    document.head.appendChild(ld);
+
+    const director = (credits.crew || []).find(c => c.job === "Director");
+    const year     = (movie.release_date || "").slice(0, 4);
+    const genres   = (movie.genres || []).map(g => g.name).join(", ");
+    const rating   = (movie.vote_average || 0).toFixed(1);
+    const runtime  = movie.runtime;
+
+    document.getElementById("details").innerHTML = `
+      <div class="det-poster">
+        ${movie.poster_path
+          ? `<img src="${IMG}${movie.poster_path}" alt="${movie.title}">`
+          : `<div class="det-ph"><i class="fas fa-film"></i></div>`}
+      </div>
+      <div class="det-info">
+        <div class="det-title">${movie.title}</div>
+        <div class="chips">
+          ${year ? `<span class="chip"><i class="fas fa-calendar-alt"></i>${year}</span>` : ""}
+          <span class="chip"><i class="fas fa-star"></i>${rating}</span>
+          ${runtime ? `<span class="chip"><i class="fas fa-clock"></i>${runtime}m</span>` : ""}
+        </div>
+        ${genres ? `<div class="det-genres">${genres}</div>` : ""}
+        <div class="det-overview">${movie.overview || "No overview available."}</div>
+        ${director ? `<div class="det-director"><i class="fas fa-video"></i>Dir. ${director.name}</div>` : ""}
+      </div>`;
+
+    const trailer = (videos.results || []).find(v => v.type === "Trailer" && v.site === "YouTube");
+    const trlBtn  = document.getElementById("trlBtn");
+    if (trailer) {
+      trlBtn.style.display = "flex";
+      trlBtn.onclick = () => {
+        document.getElementById("trlFrame").src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1`;
+        document.getElementById("trlModal").classList.add("open");
+      };
+    }
+
+    const wlBtn = document.getElementById("wlBtn");
+    const syncWL = () => {
+      const inWL = WL.has(movie.id, "movie");
+      wlBtn.className = `act-btn ${inWL ? "inWL" : "sec"}`;
+      wlBtn.innerHTML = `<i class="fas fa-${inWL ? "check" : "bookmark"}"></i> ${inWL ? "In Watchlist" : "Add to Watchlist"}`;
+    };
+    syncWL();
+    wlBtn.onclick = () => {
+      WL.has(movie.id, "movie") ? WL.remove(movie.id, "movie") : WL.add({ ...movie, type: "movie" });
+      syncWL();
+    };
+  } catch (e) { console.error(e); }
+}
+
+async function loadRelated() {
+  try {
+    const r = await fetch(`${BASE}/movie/${movieId}/similar?api_key=${API_KEY}&language=en-US&page=1`);
+    const d = await r.json();
+    const items = (d.results || []).filter(m => !BLOCKED_MOVIES.has(m.id)).slice(0, 12);
+    const grid  = document.getElementById("relGrid");
+    items.forEach(m => grid.appendChild(buildCard({ ...m, type: "movie" })));
+  } catch (e) { console.error(e); }
+}
+
+const trlModal = document.getElementById("trlModal");
+function closeTrailer() {
+  document.getElementById("trlFrame").src = "";
+  trlModal.classList.remove("open");
+}
+document.getElementById("trlClose").onclick = closeTrailer;
+trlModal.addEventListener("click", e => { if (e.target === trlModal) closeTrailer(); });
+
+loadDetails();
+loadRelated();
